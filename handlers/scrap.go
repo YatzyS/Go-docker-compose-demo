@@ -1,12 +1,13 @@
 package handlers
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+	"io/ioutil"
 
 	"../models"
 	"../utils"
+	"bytes"
 )
 
 type Scrap struct {
@@ -31,5 +32,21 @@ func (s *Scrap) ServerHTTP(rw http.ResponseWriter, r *http.Request) {
 		http.Error(rw, "Unabled to get data from amazon", http.StatusNotFound)
 	}
 	s.l.Printf("Product :- %#v", product)
-	rw.Write([]byte(fmt.Sprintf("%#v", product)))
+	productByteBuffer := new(bytes.Buffer)
+	err = product.ToJSON(productByteBuffer)
+	if err != nil {
+		s.l.Fatal(err)
+		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
+	}
+	res, err := http.Post("http://localhost:9090/add", "application/json", productByteBuffer)
+	if err != nil {
+		s.l.Fatal(err)
+		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
+	}
+	bodyBytes, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		s.l.Fatal(err)
+		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
+	}
+	rw.Write(bodyBytes)
 }

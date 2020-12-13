@@ -15,14 +15,6 @@ func (u *URLData) String() string {
 	return fmt.Sprintf("URL: %s", u.URL)
 }
 
-// func (u *URLData) MarshalJSON() ([]byte, error) {
-// 	return json.Marshal(*u)
-// }
-
-// func (u *URLData) UnmarshalJSON(text []byte) error {
-// 	return json.Unmarshal(text, u)
-// } 
-
 func (u *URLData) FromJSON(r io.Reader) error {
 	e := json.NewDecoder(r)
 	return e.Decode(u)
@@ -64,14 +56,6 @@ func CreateProduct(url, name, imageURL, description, price, totalReviews string)
 func (p *ProductData) String() string {
 	return fmt.Sprintf("URL: %s \n Product Name:- %s \n ImageURL: %s \n Description %s \n Price %s \n TotalReviews: %s", p.URL, p.Product.Name, p.Product.ImageURL, p.Product.Description, p.Product.Price, p.Product.TotalReviews)
 }
-
-func (p *ProductData) MarshalJSON() ([]byte, error) {
-	return json.Marshal(p)
-}
-
-func (p *ProductData) UnmarshalJSON(text []byte) error {
-	return json.Unmarshal(text, p)
-} 
 
 func (p *ProductData) FromJSON(r io.Reader) error {
 	e := json.NewDecoder(r)

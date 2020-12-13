@@ -5,12 +5,13 @@ import(
 	"fmt"
 	"strings"
 	"github.com/gocolly/colly"
+	"os"
+	"bytes"
 )
 
 func GetProductData(urlData *models.URLData) (*models.ProductData, error) {
 	var name, price, imageURL, totalReviews, description string
 	err := error(nil)
-	fmt.Println("here")
 	c := colly.NewCollector()
 	c.OnHTML("#productTitle", func(e *colly.HTMLElement) {
 		name = strings.Trim(e.Text,"\n")
@@ -34,3 +35,22 @@ func GetProductData(urlData *models.URLData) (*models.ProductData, error) {
 	product := models.CreateProduct(urlData.URL, name, imageURL, description, price, totalReviews)
 	return product, err
 }
+
+func AddToJSON(product *models.ProductData) error {
+	file, err := os.OpenFile(JSON_FILE_NAME, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return fmt.Errorf("Couldn't create or append to existing file ",err)
+	}
+	defer file.Close()
+	productBytesBuffer := new(bytes.Buffer)
+	err = product.ToJSON(productBytesBuffer)
+	if err != nil {
+		return fmt.Errorf("Couldn't Unmarshal ProductData struct ",err)
+	}
+	_,err = file.Write(productBytesBuffer.Bytes())
+	if err != nil {
+		return fmt.Errorf("Couldn't write JSON to file ",err)
+	}
+	return nil
+}
+
