@@ -1,13 +1,14 @@
 package handlers
 
 import (
+	"io/ioutil"
 	"log"
 	"net/http"
-	"io/ioutil"
+
+	"bytes"
 
 	"../models"
 	"../utils"
-	"bytes"
 )
 
 type Scrap struct {
