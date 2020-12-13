@@ -13,22 +13,20 @@ import (
 
 func main() {
 	router := mux.NewRouter()
-	l := log.New(os.Stdout, "data_scrapper", log.LstdFlags)
+	l := log.New(os.Stdout, "data_adder ", log.LstdFlags)
 	postRouter := router.Methods(http.MethodPost).Subrouter()
-	scrap := handlers.NewScrap(l)
 	add := handlers.NewAdd(l)
-	postRouter.HandleFunc("/scrap", scrap.ServerHTTP)
 	postRouter.HandleFunc("/add", add.ServerHTTP)
 	
 	server := &http.Server{
-		Addr: ":9090",
+		Addr: ":9091",
 		Handler: router,
 		IdleTimeout: 120*time.Second,
 		ReadTimeout: 10*time.Second,
 		WriteTimeout: 10*time.Second,
 	}
 	go func() {
-		l.Println("Starting server on port 9090")
+		l.Println("Starting server on port 9091")
 		err := server.ListenAndServe()
 		if err != nil {
 			l.Fatal(err)

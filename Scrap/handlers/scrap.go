@@ -38,7 +38,7 @@ func (s *Scrap) ServerHTTP(rw http.ResponseWriter, r *http.Request) {
 		s.l.Fatal(err)
 		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
 	}
-	res, err := http.Post("http://localhost:9090/add", "application/json", productByteBuffer)
+	res, err := http.Post("http://localhost:9091/add", "application/json", productByteBuffer)
 	if err != nil {
 		s.l.Fatal(err)
 		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
