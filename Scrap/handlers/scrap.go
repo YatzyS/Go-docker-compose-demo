@@ -7,8 +7,8 @@ import (
 
 	"bytes"
 
-	"../models"
-	"../utils"
+	"data_scrapper/models"
+	"data_scrapper/utils"
 )
 
 type Scrap struct {
@@ -39,7 +39,7 @@ func (s *Scrap) ServerHTTP(rw http.ResponseWriter, r *http.Request) {
 		s.l.Fatal(err)
 		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
 	}
-	res, err := http.Post("http://localhost:9091/add", "application/json", productByteBuffer)
+	res, err := http.Post("http://add_data:9091/add", "application/json", productByteBuffer)
 	if err != nil {
 		s.l.Fatal(err)
 		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
@@ -49,5 +49,6 @@ func (s *Scrap) ServerHTTP(rw http.ResponseWriter, r *http.Request) {
 		s.l.Fatal(err)
 		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
 	}
+	s.l.Printf(string(bodyBytes))
 	rw.Write(bodyBytes)
 }

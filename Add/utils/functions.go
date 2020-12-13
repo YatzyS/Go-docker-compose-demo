@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"../models"
+	"data_add/models"
 )
 
 func AddToJSON(product *models.ProductData) error {

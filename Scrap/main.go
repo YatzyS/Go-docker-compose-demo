@@ -1,14 +1,16 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	"net/http"
-	"./handlers"
-	"os"
-	"log"
-	"time"
 	"context"
+	"log"
+	"net/http"
+	"os"
 	"os/signal"
+	"time"
+
+	"data_scrapper/handlers"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -17,13 +19,13 @@ func main() {
 	postRouter := router.Methods(http.MethodPost).Subrouter()
 	scrap := handlers.NewScrap(l)
 	postRouter.HandleFunc("/scrap", scrap.ServerHTTP)
-	
+
 	server := &http.Server{
-		Addr: ":9090",
-		Handler: router,
-		IdleTimeout: 120*time.Second,
-		ReadTimeout: 10*time.Second,
-		WriteTimeout: 10*time.Second,
+		Addr:         ":9090",
+		Handler:      router,
+		IdleTimeout:  120 * time.Second,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
 	}
 	go func() {
 		l.Println("Starting server on port 9090")
@@ -37,10 +39,10 @@ func main() {
 	sigChan := make(chan os.Signal)
 	signal.Notify(sigChan, os.Interrupt)
 	signal.Notify(sigChan, os.Kill)
-	
-	sig := <- sigChan
+
+	sig := <-sigChan
 	l.Println("Shutting down ", sig)
 	timeoutContext, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	server.Shutdown(timeoutContext)
-	
+
 }

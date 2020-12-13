@@ -6,4 +6,5 @@ COPY go.mod .
 COPY go.sum .
 RUN go mod download
 RUN go build -o main .
+EXPOSE 9091
 CMD ["/app/main"]

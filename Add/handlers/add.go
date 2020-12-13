@@ -1,12 +1,12 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
-	"fmt"
 
-	"../utils"
-	"../models"
+	"data_add/models"
+	"data_add/utils"
 )
 
 type Add struct {

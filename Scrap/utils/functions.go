@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"../models"
+	"data_scrapper/models"
+
 	"github.com/gocolly/colly"
 )
 

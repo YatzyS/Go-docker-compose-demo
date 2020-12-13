@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+
+  scrap_data:
+    build: ./Scrap
+    ports:
+      - "9090:9090"
+    restart: unless-stopped  
+    networks:
+      - backend
+  
+  add_data:
+    build: ./Add
+    ports:
+      - "9091:9091"
+    restart: unless-stopped  
+    networks: 
+      - backend
+
+networks:
+  backend:
