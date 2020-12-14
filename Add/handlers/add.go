@@ -13,10 +13,12 @@ type Add struct {
 	l *log.Logger
 }
 
+// NewAdd - creates and return pointer struct Add
 func NewAdd(l *log.Logger) *Add {
 	return &Add{l}
 }
 
+// ServerHTTP - handles HTTP request to /add
 func (a *Add) ServerHTTP(rw http.ResponseWriter, r *http.Request) {
 	a.l.Println("Adding data from given URL to JSON file")
 	productData := &models.ProductData{}

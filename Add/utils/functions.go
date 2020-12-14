@@ -8,6 +8,7 @@ import (
 	"data_add/models"
 )
 
+// AddToJSON - used to add product data to a JSON file
 func AddToJSON(product *models.ProductData) error {
 	file, err := os.OpenFile(JSON_FILE_NAME, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {

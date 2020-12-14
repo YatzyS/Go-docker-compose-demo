@@ -9,6 +9,7 @@ import (
 	"github.com/gocolly/colly"
 )
 
+// GetProductData - used to scrap product data from amazon
 func GetProductData(urlData *models.URLData) (*models.ProductData, error) {
 	var name, price, imageURL, totalReviews, description string
 	err := error(nil)

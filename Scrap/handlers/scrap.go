@@ -11,14 +11,17 @@ import (
 	"data_scrapper/utils"
 )
 
+// Scrap - struct to handle logging
 type Scrap struct {
 	l *log.Logger
 }
 
+// NewScrap - Creates new Scrap struct object
 func NewScrap(l *log.Logger) *Scrap {
 	return &Scrap{l}
 }
 
+// ServerHTTP - Handles HTTP request to /scrap
 func (s *Scrap) ServerHTTP(rw http.ResponseWriter, r *http.Request) {
 	s.l.Println("Scrapping data from given URL")
 	urlData := &models.URLData{}
