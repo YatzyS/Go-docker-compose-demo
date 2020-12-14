@@ -35,4 +35,5 @@ func (a *Add) ServerHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 	a.l.Printf("Data Inserted")
 	rw.Write([]byte(fmt.Sprintf("Data inserted")))
+	productData.ToJSON(rw)
 }
