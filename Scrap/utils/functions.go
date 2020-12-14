@@ -16,8 +16,8 @@ func GetProductData(urlData *models.URLData) (*models.ProductData, error) {
 	c.OnHTML("#productTitle", func(e *colly.HTMLElement) {
 		name = strings.Trim(e.Text, "\n")
 	})
-	c.OnHTML("#landingImage", func(e *colly.HTMLElement) {
-		imageURL = e.Attr("src")
+	c.OnHTML("img#landingImage", func(e *colly.HTMLElement) {
+		imageURL = e.Attr("data-old-hires")
 	})
 	c.OnHTML("#acrCustomerReviewText", func(e *colly.HTMLElement) {
 		totalReviews = strings.Trim(e.Text, "\n")
@@ -25,7 +25,10 @@ func GetProductData(urlData *models.URLData) (*models.ProductData, error) {
 	c.OnHTML("#featurebullets_feature_div", func(e *colly.HTMLElement) {
 		description = strings.Trim(e.Text, "\n")
 	})
-	c.OnHTML("div#newAccordionRow span.a-color-price", func(e *colly.HTMLElement) {
+	c.OnHTML("span#priceblock_ourprice", func(e *colly.HTMLElement) {
+		price = strings.Trim(e.Text, "\n")
+	})
+	c.OnHTML("span#priceblock_dealprice", func(e *colly.HTMLElement) {
 		price = strings.Trim(e.Text, "\n")
 	})
 	c.OnError(func(r *colly.Response, err error) {
